@@ -1,0 +1,374 @@
+{% extends "base.html" %}
+{% block title %}
+Ride Information
+{% endblock %}
+{% block content %}
+<style>
+    body {
+        margin: 0;
+    }
+
+    .sb-title {
+        position: relative;
+        top: -12px;
+        font-family: Roboto, sans-serif;
+        font-weight: 500;
+    }
+
+    .sb-title-icon {
+        position: relative;
+        top: -5px;
+    }
+
+    .card-container {
+        display: flex;
+        height: 500px;
+        width: 600px;
+    }
+
+    .panel {
+        background: rgb(123, 87, 223);
+        width: 300px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    .half-input-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .half-input {
+        max-width: 120px;
+    }
+
+    .map {
+        width: 300px;
+    }
+
+    h2 {
+        margin: 0;
+        font-family: Roboto, sans-serif;
+    }
+
+    input {
+        height: 30px;
+    }
+
+    input {
+        border: 0;
+        border-bottom: 1px solid black;
+        font-size: 14px;
+        font-family: Roboto, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+    }
+
+    input:focus::placeholder {
+        color: white;
+    }
+
+    .button-cta {
+        height: 40px;
+        width: 40%;
+        background: #3367d6;
+        color: white;
+        font-size: 15px;
+        text-transform: uppercase;
+        font-family: Roboto, sans-serif;
+        border: 0;
+        border-radius: 3px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.48);
+        cursor: pointer;
+    }
+    body {
+        font-family: 'Arial', sans-serif;
+        background: url('https://i.ibb.co/PhVR2Vh/bg1.png') no-repeat center center/cover;
+        margin: 0;
+        padding: 0;
+       
+    }
+
+    .form-wrapper {
+        max-width: 600px;
+        margin: 5% auto;
+        padding: 20px;
+         background: #c5bbf1b6;;
+        box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+    .route-form h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .input-group {
+        margin-bottom: 15px;
+    }
+
+    .input-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: bold;
+    }
+
+    .input-group input,
+    .input-group select,
+    .input-group textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #0a9a07;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .submit-button {
+        text-align: center;
+    }
+
+    .submit-button input {
+        background-color: #2d2254;
+        color: #fff;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .submit-button input:hover {
+        background-color: #0056b3;
+    }
+    /* Flash Messages */
+    .flash-messages-container {
+        position: fixed;
+        top: 0;
+        right: 0;
+        padding: 10px;
+        z-index: 1000;
+    }
+
+    .alert {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+        opacity: 1;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .fade-out {
+        animation: fadeOut 4s forwards;
+    }
+
+    @keyframes fadeOut {
+        0% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+</style>
+<div class="form-wrapper">
+    <h1>Add Route</h1>
+    <form class="route-form" action="{{url_for('views.home')}}" method="POST">
+        <div class="input-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required placeholder="Your Name...">
+        </div>
+
+        <div class="input-group">
+            <label for="phone_number">Phone Number:</label>
+            <input type="text" id="phone_number" name="phone_number" required placeholder="Your Phone Number...">
+        </div>
+
+        <div class="input-group">
+            <label for="from">From:</label>
+            <select id="from" name="from" required>
+                <option value="" disabled selected>Select your option</option>
+                <option value="Hostler Gate">Hostler Gate</option>
+                <option value="Boustany Gate">Boustany Gate</option>
+                <option value="Main Gate">Main Gate</option>
+                <option value="Medical Gate">Medical Gate</option>
+                <option value="Bio Gate">Bio Gate</option>
+                <option value="OSB Gate">OSB Gate</option>
+                <option value="Bliss Gate">Bliss Gate</option>
+            </select>
+        </div>
+        
+        
+
+        <div class="input-group">
+            <label for="seats">Number of Seats:</label>
+            <input type="number" id="seats" name="seats" min="1" required placeholder="1">
+        </div>
+
+        <div class="input-group">
+            <label for="time">Time of the Ride:</label>
+            <input type="time" id="time" name="time" required>
+        </div>
+
+        <div class="input-group">
+            <label for="note">Notes and Recommendations:</label>
+            <textarea name="note" id="note" class="form-control" placeholder="Any additional details..."></textarea>
+        </div>
+        <input type="hidden" id="toloc-input" name="to" value="">
+       
+        <div class="card-container">
+            <div class="panel">
+                <div>
+                    <img class="sb-title-icon"
+                         src="https://fonts.gstatic.com/s/i/googlematerialicons/location_pin/v5/24px.svg" alt="">
+                    <span class="sb-title">Address Selection</span>
+                    <input type="text" placeholder="Address" id="location-input"/>
+                </div>
+                
+            </div>
+            <div class="map" id="gmp-map"></div>
+        </div>
+        
+        
+        
+        
+                <div class="submit-button">
+
+                    <input type="submit" value="Submit"onclick="submitForm()">
+                </div>
+                
+            </form>
+            <form id="location-form" method="POST">
+                
+                <!-- Other input fields here -->
+                
+            </form>
+        </div>
+        <!-- Google Maps API script with your API key -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCx3B7wca8ROO4c-APUGC9TvYqmzqFvT28          
+        
+        &libraries=places&callback=initMap" async defer></script>
+        <script>
+            "use strict";
+    
+            function initMap() {
+                // Google Maps JavaScript initialization goes here
+                const CONFIGURATION = {
+                    "ctaTitle": "Submit",
+                    "mapOptions": {
+                        "center": { "lat": 37.4221, "lng": -122.0841 },
+                        "fullscreenControl": true,
+                        "mapTypeControl": false,
+                        "streetViewControl": true,
+                        "zoom": 11,
+                        "zoomControl": true,
+                        "maxZoom": 22,
+                        "mapId": ""
+                    },
+                    "mapsApiKey": "YOUR_API_KEY_HERE",
+                    "capabilities": {
+                        "addressAutocompleteControl": true,
+                        "mapDisplayControl": true,
+                        "ctaControl": true
+                    }
+                };
+                const componentForm = [
+                    'location',
+                    'locality',
+                    'administrative_area_level_1',
+                    'country',
+                    'postal_code',
+                ];
+    
+                const getFormInputElement = (component) => document.getElementById(component + '-input');
+                const map = new google.maps.Map(document.getElementById("gmp-map"), {
+                    zoom: CONFIGURATION.mapOptions.zoom,
+                    center: { lat: 37.4221, lng: -122.0841 },
+                    mapTypeControl: false,
+                    fullscreenControl: CONFIGURATION.mapOptions.fullscreenControl,
+                    zoomControl: CONFIGURATION.mapOptions.zoomControl,
+                    streetViewControl: CONFIGURATION.mapOptions.streetViewControl
+                });
+                const marker = new google.maps.Marker({ map: map, draggable: false });
+                const autocompleteInput = getFormInputElement('location');
+                const autocomplete = new google.maps.places.Autocomplete(autocompleteInput, {
+                    fields: ["address_components", "geometry", "name"],
+                    types: ["address"],
+                });
+                autocomplete.addListener('place_changed', function () {
+                    marker.setVisible(false);
+                    const place = autocomplete.getPlace();
+                    if (!place.geometry) {
+                        window.alert('No details available for input: \'' + place.name + '\'');
+                        return;
+                    }
+                    renderAddress(place);
+                    fillInAddress(place);
+                });
+    
+                function fillInAddress(place) {
+                    const addressNameFormat = {
+                        'street_number': 'short_name',
+                        'route': 'long_name',
+                        'locality': 'long_name',
+                        'administrative_area_level_1': 'short_name',
+                        'country': 'long_name',
+                        'postal_code': 'short_name',
+                    };
+                    const getAddressComp = function (type) {
+                        for (const component of place.address_components) {
+                            if (component.types[0] === type) {
+                                return component[addressNameFormat[type]];
+                            }
+                        }
+                        return '';
+                    };
+                    getFormInputElement('location').value = getAddressComp('street_number') + ' ' + getAddressComp('route');
+                    for (const component of componentForm) {
+                        if (component !== 'location') {
+                            getFormInputElement(component).value = getAddressComp(component);
+                        }
+                    }
+                }
+    
+                function renderAddress(place) {
+                    map.setCenter(place.geometry.location);
+                    marker.setPosition(place.geometry.location);
+                    marker.setVisible(true);
+                }
+            }
+    
+            // JavaScript function to submit the form
+            function submitForm() {
+                const locationInput = document.getElementById('location-input');
+                const tolocInput = document.getElementById('toloc-input');
+    
+                // Get the value of the location input field
+                const locationValue = locationInput.value;
+    
+                // Set the location value to the toloc input field
+                tolocInput.value = locationValue;
+    
+                // Submit the form
+                document.getElementById('location-form').submit();
+            }
+        </script>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="flash-messages-container">
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} fade-out">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
+{% endblock %}

@@ -1,0 +1,255 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <style>
+    /* Add this CSS to your stylesheet */
+.flash-messages-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    z-index: 1000;
+}
+
+.alert {
+    background-color: #fff; /* Background color for the flash messages */
+    border: 1px solid #ccc; /* Border for the flash messages */
+    padding: 10px;
+    margin-bottom: 10px;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.fade-out {
+    animation: fadeOut 4s forwards;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+
+    body {
+      background: url('https://i.ibb.co/PhVR2Vh/bg1.png') no-repeat center center/cover;
+      
+    }
+
+    .form-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 3em;
+      padding: 2em;
+      background-color: #2d2254;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-container form {
+      flex: 1;
+      margin-right: 1em;
+      padding: 2em;
+      background: #8a83a7;
+      border-radius: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+ 
+    .form-group label {
+      font-weight: bold;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #3498db;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      transition: border-color 0.3s ease-in-out;
+    }
+
+    .form-group input:focus {
+      border-color: #2c3e50;
+      box-shadow: 0 0 10px #2c3e50;
+    }
+
+    .btn-primary {
+      background-color: #3498db;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .btn-primary:hover {
+      background-color: #2980b9;
+    }
+
+    #img2, #mimg {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin: 15px;
+      transition: transform .2s; 
+    }
+
+    #img2:hover, #mimg:hover {
+      transform: scale(1.1);
+    }
+
+    #madiv {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 15px;
+  
+    }
+
+    #img1 {
+      border-radius: 71% 29% 68% 32% / 25% 100% 0% 75% ;
+      max-width: 400px;
+      margin-left: 1em;
+      transition: transform .2s; 
+      padding-top: 15px;
+    } 
+
+    #img1:hover {
+      transform: scale(1.1);
+    }
+
+    .gender-dropdown {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .gender-options {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+        z-index: 1;
+    }
+
+    .gender-options div {
+        padding: 8px 16px;
+        cursor: pointer;
+    }
+
+    .gender-options div:hover {
+        background-color: #e0e0e0;
+    }
+
+    .gender-dropdown:hover .gender-options {
+        display: block;
+    }
+    h1,
+h2,
+h3,
+p {
+	margin-bottom: 10px;
+}
+    h2{
+      color :#e0e0e0;
+      font-size: 30px;
+      font-style: bold;
+    }
+    .image-container {
+  max-width: 400px; /* Adjust the max-width as needed */
+  margin-left: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="form-container">
+    <form action="{{ url_for('auth.login') }}" method="POST" >
+      <h2 align="center">LOGIN</h2>
+      <p align="left"><i><strong>Welcome to the first carpooling website to and from the American University of Beirut</strong></i></p>
+
+      <div id="madiv">
+        <a href="https://www.aub.edu.lb/Pages/AUBSIS.aspx"><img id='img2' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiLKIONyoAAhUGKN5Cp8i8V3oHpDuEQYXpmH57m5pitYij2CbOpq6D8fBfBiuRFr2VOM8&usqp=CAU"' alt="Image">
+
+        </a>
+        <a href="https://aws.amazon.com/"><img src="data:image/jpeg;base64,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" id="mimg"></a>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Aubnet@aub.edu.lb" />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" />
+      </div>
+
+      <div class="form-group">
+        <label for="Name">UserName</label>
+        <input type="text" class="form-control" id="Name" name="Name" placeholder="Enter username" required/>
+      </div>
+
+      <div class="form-group">
+        <label for="Gender">Gender</label>
+        <div class="gender-dropdown">
+            Selected Gender: 
+            <span class="gender-choice">[Choose]</span>
+            <div class="gender-options">
+                <div onclick="selectGender('Male')">Male</div>
+                <div onclick="selectGender('Female')">Female</div>
+            </div>
+        </div>
+        <input type="hidden" id="Gender" name="Gender" />
+      </div>
+
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+
+    <div class="image-container">
+      <img src="https://img.freepik.com/free-photo/young-man-pointing-side-near-woman-waving-hand-with-hat-leaning-out-from-car_23-2148039070.jpg?w=826&t=st=1693841443~exp=1693842043~hmac=fbdaba243ccaffa316d8c0fcf54cbe9910f8a996fe482bb92caf7adc13408143" alt="Carpooling" id="img1">
+      <img src="https://imageio.forbes.com/specials-images/dam/imageserve/1161159565/0x0.jpg?format=jpg&width=1200" alt="Carpooling" id="img1">
+    </div>
+    
+  </div>
+</div>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="flash-messages-container">
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} fade-out">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
+<script>
+    function selectGender(gender) {
+        document.querySelector('.gender-choice').innerText = gender;
+        document.querySelector('#Gender').value = gender;
+        document.querySelector('.gender-options').style.display = 'none';
+    }
+</script>
+</body>
+</html>
+{% endblock %}

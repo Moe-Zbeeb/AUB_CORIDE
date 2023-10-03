@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SocketIO Chat</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background: url('https://i.ibb.co/PhVR2Vh/bg1.png') no-repeat center center/cover;
+            font-size: 18px;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #navbar {
+            background-color: #2d2254;
+            color: white;
+            padding: 10px 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .chat-container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.08);
+            width: 1000%;
+            max-width: 1000px;
+            text-align: center ;
+            margin-top: 100px; 
+            margin-left: -350px; 
+            margin-right: 200px;
+        }
+
+        #chat-history {
+            height: 400px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+
+        #message_input {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        #message_input:focus {
+            outline: none;
+            border-color: #2d2254;
+        }
+
+        button {
+            background-color: #2d2254;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1a143b;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar">
+        <h1>AUB_Coride Chat</h1>
+    </div>
+    <div class="chat-container">
+        <div id="chat-history" data-room="{{ room }}"></div>
+        <input id="message_input" placeholder="Type a message">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    <div id="user-data" data-username="{{ username }}"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        function sendMessage() {
+            var messageInput = document.getElementById('message_input');
+            var message = messageInput.value;
+            messageInput.value = '';
+
+            var userDataDiv = document.getElementById('user-data');
+            var username = userDataDiv.getAttribute('data-username');
+            var room = document.getElementById('chat-history').getAttribute('data-room');
+
+            socket.emit('message', { 'username': username, 'text': message, 'room': room });
+        }
+
+        socket.on('chat_history', function(history) {
+            var chatHistoryDiv = document.getElementById('chat-history');
+            var room = chatHistoryDiv.getAttribute('data-room');
+            chatHistoryDiv.innerHTML = '';
+
+            history.forEach(function(message) {
+                var messageElement = document.createElement('p');
+                messageElement.textContent = message.username + ': ' + message.text;
+                chatHistoryDiv.appendChild(messageElement);
+            });
+        });
+
+        var room = document.getElementById('chat-history').getAttribute('data-room');
+        socket.emit('join', { 'room': room });
+    </script>
+</body>
+</html>
+{% endblock %}

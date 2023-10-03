@@ -1,0 +1,289 @@
+{%extends 'base.html'%}
+{%block content%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUBCoRide - Creative Web Design</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
+    <style>
+        :root {
+            --primary-color: #2d2254;
+            --secondary--color: #f5c42f;
+            --text-color: #c5bbec;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--primary-color);
+            color: #fff;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, p {
+            margin-bottom: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .btn {
+            display: inline-block;
+            border: 0;
+            background: var(--secondary--color);
+            color: #fff;
+            border-radius: 20px;
+            padding: 8px 30px;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            transform: scale(0.98);
+        }
+
+        .primary-text {
+            color: var(--primary-color);
+        }
+
+        .secondary-text {
+            color: var(--secondary--color);
+        }
+
+        .section {
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .section-top {
+            min-height: 500px;
+            background: url('https://i.ibb.co/PhVR2Vh/bg1.png') no-repeat center center/cover;
+        }
+
+        .section-top h1 {
+            font-size: 70px;
+            line-height: 1.3;
+        }
+
+        .section-top .content {
+            position: absolute;
+            top: 100px;
+            right: 20px;
+            width: 55%;
+        }
+
+        .section-stream {
+            min-height: 700px;
+            background: url('https://i.ibb.co/bsX6RV0/bg2.png') no-repeat center center/cover;
+        }
+
+        .section-stream h2 {
+            font-size: 35px;
+        }
+
+        .section-stream .play {
+            width: 27%;
+            position: absolute;
+            top: 100px;
+            left: 50px;
+        }
+
+        .section-stream .content .second {
+            position: absolute;
+            width: 50%;
+            top: 130px;
+            right: 70px;
+            margin-top: 250px;
+        }
+
+        .section-stream .content .first {
+            position: absolute;
+            width: 50%;
+            top: 130px;
+            left: 70px;
+        }
+
+        .section-stream .content > div,
+        .section-grid > div {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 30px;
+            text-align: center;
+        }
+
+        .section-grid p {
+            color: var(--text-color);
+        }
+
+        .section-grid .dot {
+            font-size: 40px;
+            padding-left: 2px;
+        }
+
+        .footer {
+            border-top: var(--text-color) 1px solid;
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        .footer ul {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        /* Background animation styles */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 5s linear infinite;
+        }
+        #navbar {
+          position: fixed;
+            top: 0;
+             left: 0;
+             z-index: 1000; 
+}
+
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0;
+                transform: translateY(-200px);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(200px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background animation container -->
+    <div class="stars">
+        <!-- Generate stars using JavaScript -->
+        <script>
+            function createStars() {
+                const starCount = 2000; // Adjust the number of stars as needed
+                const container = document.querySelector('.stars');
+
+                for (let i = 0; i < starCount; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.style.top = `${Math.random() * 100}%`;
+                    star.style.left = `${Math.random() * 100}%`;
+                    star.style.width = `${Math.random() * 2}px`;
+                    star.style.height = star.style.width;
+                    container.appendChild(star);
+                }
+            }
+
+            // Create stars when the page loads
+            window.addEventListener('load', createStars);
+        </script>
+    </div>
+
+    <!-- The rest of your webpage content -->
+    <section class="section section-top">
+        <div class="content rellax" data-rellax-speed="5">
+            <h1>The first Carpooling website in AUB</h1>
+            <a href="/about" class="btn btn-primary">Learn More</a>
+        </div>
+    </section>
+
+    <section class="section section-stream">
+        <div class="content rellax" data-rellax-speed="10">
+            <div class="first">
+                <h2 class="secondary-text">Free and Safe</h2>
+                <p>
+                    Our team of enthusiastic students recognized the daily transportation challenges faced by fellow students, such as the lack of safe public transportation options, rising fuel costs, and persistent traffic congestion.
+                </p>
+            </div>
+            <div class="second">
+                <h2 class="secondary-text">Made by Students for Students</h2>
+                <p>
+                    "AUBCoRide" is a collaborative project by a group of dedicated Engineering students majoring in Computer and Communication Engineering (CCE) and Computer Science and Engineering (CSE) with a minor in Business at the American University of Beirut.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-grid">
+        <div class="rellax" data-rellax-speed="1" data-rellax-xs-speed="3">
+            <i class="fas fa-video fa-3x secondary-text"></i>
+            <h2>Driven by Passion and Innovation<span class="secondary-text dot">.</span></h2>
+            <p>
+                Driven by our passion for technology and innovation, we decided to harness our skills to address this issue by developing a cutting-edge carpooling website.
+            </p>
+        </div>
+        <div class="rellax" data-rellax-speed="4" data-rellax-xs-speed="3">
+            <i class="fas fa-users fa-3x secondary-text"></i>
+            <h2>AUBCoRide's Mission<span class="secondary-text dot">.</span></h2>
+            <p>
+                This project represents our commitment to enhancing the college experience for our peers, fostering a sense of community, and contributing to sustainability efforts on campus.
+            </p>
+        </div>
+        <div class="rellax" data-rellax-speed="7" data-rellax-xs-speed="3">
+            <i class="fas fa-book fa-3x secondary-text"></i>
+            <h2>More Than Just a Website<span class="secondary-text dot">.</span></h2>
+            <p>
+                "AUBCoRide" is more than just a website; it's a solution to transportation challenges that will bring students together and simplify their daily commutes.
+            </p>
+        </div>
+    </section>
+
+    
+        <div class="user-feedback">
+            <h3 class="secondary-text">Join the Conversation</h3>
+            <p class="secondary-text">Share your thoughts and ideas with us on social media.</p>
+        </div>
+        <div class="collaboration">
+            <h3 class="secondary-text">Collaborate with Us</h3>
+            <p class="secondary-text">We welcome collaborations with students, designers, and developers.</p>
+        </div>
+ 
+
+    <script>
+        let rellax = new Rellax('.rellax');
+    </script>
+</body>
+</html> 
+{% endblock %}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashing Message</title>
+    <style>
+        
+        .flash {
+            animation: flash 1s infinite alternate; /* Flash for 1 second, infinitely */
+            background: linear-gradient(45deg, red, orange); /* Gradient background */
+            padding: 20px; /* Padding for better spacing */
+            border-radius: 10px; /* Rounded corners */
+            border: 3px solid #ff0000; /* Red border */
+            box-shadow: 0 0 10px 3px #ff4500; /* Orange glow around the box */
+            font-family: 'Arial Black', sans-serif; /* A bold font */
+            color: white; /* Text color */
+            text-align: center; /* Center the text */
+        }
+
+        @keyframes flash {
+            0% {
+                transform: scale(1); /* Start from regular size */
+                opacity: 1; /* Fully visible */
+            }
+            50% {
+                transform: scale(1.1); /* Slightly enlarge */
+                opacity: 0.5; /* Half visible */
+            }
+            100% {
+                transform: scale(1); /* Back to regular size */
+                opacity: 0; /* Completely invisible */
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="flashMessage" class="flash">
+        <h1><strong>1-seat has been reserved</strong></h1>
+    </div>
+
+    <script>
+        // JavaScript to stop the flashing after a certain time (5 seconds in this example)
+        setTimeout(function() {
+            document.getElementById('flashMessage').classList.remove('flash');
+        }, 5000); // 5000 milliseconds = 5 seconds
+
+    </script>
+</body>
+
+</html>

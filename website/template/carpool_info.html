@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block title %}
+Ride Information
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h2 class="text-center">Ride Information</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ carpool.name }}</td>
+                </tr>
+                <tr>
+                    <th>Phone Number</th>
+                    <td>{{ carpool.phone_number }}</td>
+                </tr>
+                <tr>
+                    <th>From Location</th>
+                    <td>{{ carpool.from_location }}</td>
+                    
+                </tr>
+                <tr>
+                    <th>To Location</th>
+                    <td>{{ carpool.to_location }}</td>
+                    <input type="hidden" id="to"  value="{{carpool.to_location}}">
+                </tr>
+                <tr>
+                    <th>Total Seats</th>
+                    <td>{{ carpool.total_seats }}</td>
+                </tr>
+                <tr>
+                    <th>Available Seats</th>
+                    <td>{{ carpool.available_seats }}</td>
+                </tr>
+                <tr>
+                    <th>Departure Time</th>
+                    <td>{{ carpool.departure_time }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="map"></div>
+
+    <a href="{{ url_for('views.home') }}" class="btn btn-primary btn-back mt-3">Back to Home</a>
+</div>
+
+<style>
+    #map {
+    width: 100%;
+    height: 400px; /* Adjust the height as per your design */
+}
+
+    body{
+        min-height: 800px;
+        background: url('https://i.ibb.co/PhVR2Vh/bg1.png') no-repeat center center/cover;
+    }
+
+    .card {
+        max-width: 800px;
+        margin: 0 auto;
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-header {
+        background-color: #2d2254;
+        color: #fff;
+        text-align: center;
+        padding: 15px;
+        font-size: 24px;
+    }
+
+    table {
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #333;
+    }
+
+    
+    table {
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #333;
+        border-collapse: collapse; /* Remove cell spacing */
+    }
+
+    th {
+        background-color: #2d2254;
+        font-weight: bold;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+    }
+
+    td {
+        vertical-align: middle;
+        background-color: #f2f2f2;
+        padding: 10px;
+        text-align: center;
+    }
+
+    /* Add hover effect for rows */
+    tr:hover {
+        background-color: #dcdcdc;
+    }
+
+    .btn-back {
+        margin-top: 20px;
+        display: block;
+        width: 150px;
+        margin: 0 auto;
+        background-color: #c5bbec;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        text-align: center;
+        font-size: 18px;
+        transition: background-color 0.3s;
+        text-decoration: none;
+    }
+
+    .btn-back:hover {
+        background-color:white;
+    }
+
+    /* Additional styles for responsive design */
+    @media (max-width: 576px) {
+        .card {
+            max-width: 100%;
+            border-radius: 0;
+        }
+        .card-header {
+            font-size: 20px;
+        }
+        .btn-back {
+            width: 100%;
+        }
+    }
+</style>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCx3B7wca8ROO4c-APUGC9TvYqmzqFvT28          
+        
+        &libraries=places&callback=initMap" async defer></script>
+<script>
+    // Initialize the map with a default location (e.g., city center)
+function initMap() {
+    const map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 37.4221, lng: -122.0841 }, // Default location (e.g., city center)
+        zoom: 12, // Zoom level
+    });
+
+    // Use the Geocoding API to convert the address to coordinates
+    const geocoder = new google.maps.Geocoder();
+    const address = document.getElementById('to').value; // Replace with the actual address
+    console.log('Address:', address);
+
+    geocoder.geocode({ address: address }, (results, status) => {
+        if (status === google.maps.GeocoderStatus.OK) {
+            // Get the latitude and longitude coordinates
+            const location = results[0].geometry.location;
+
+            // Set the map center to the coordinates of the address
+            map.setCenter(location);
+
+            // Create a marker to indicate the address on the map
+            new google.maps.Marker({
+                position: location,
+                map: map,
+                title: address,
+            });
+        } else {
+            console.error('Geocode was not successful for the following reason: ' + status);
+        }
+    });
+}
+
+// Call the initMap function when the page loads
+document.addEventListener('DOMContentLoaded', initMap);
+
+</script>
+{% endblock %}

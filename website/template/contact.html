@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block title %}
+Contact Us
+{% endblock %}
+
+{% block content %}
+
+<html>
+<head> 
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMt23cez/5paNdF+TmFE5o4z4Ck5BdPtF+to8xM" crossorigin="anonymous">
+    <style>
+        body{
+            background: url('https://i.ibb.co/PhVR2Vh/bg1.png') no-repeat center center/cover; 
+            -webkit-text-fill-color: #f5c42f;
+        }
+        .contact-us {
+            background: linear-gradient(to bottom, #2d2254, transparent); /* Gradient from #2d2254 to transparent */
+            padding: 50px 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contact-us h2 {
+            color: #333;
+            font-size: 36px;
+            margin-bottom: 35px;
+        }
+
+        .contact-us p {
+            font-size: 21px;
+            margin-bottom: 45px;
+            max-width: 750px;
+        }
+
+        .contact-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .contact-item {
+            background: #ffffff;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            width: 270px;
+            font-size: 19px;
+            transition: transform 0.2s;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .contact-item a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-item a:hover {
+            color: #0056b3;
+        } 
+        @keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.contact-us {
+    /*... previous styles ... */
+    animation: fadeIn 1s forwards;
+}
+
+.contact-item i {
+    display: inline-block; /* Allows for transformation */
+    animation: bounce 0.6s infinite;
+}
+
+.contact-item:hover {
+    /*... previous styles ... */
+    background-color: #f9f9f9;
+}
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+.contact-item {
+    /*... previous styles ... */
+    animation: float 3s infinite;
+}
+
+.contact-item i:hover {
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.contact-item:hover {
+    /*... previous styles ... */
+    background: linear-gradient(135deg, #e0e0e0 0%, #f7f7f7 100%);
+}
+
+.contact-item a {
+    /*... previous styles ... */
+    position: relative;
+}
+
+.contact-item a::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #007bff;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.contact-item a:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+    </style>
+</head>
+<body>
+    <div class="contact-us">
+        <h2>Contact Us</h2>
+        <p>If you have any questions or need assistance, please feel free to contact us:</p>
+        <ul class="contact-list">
+            <li class="contact-item">
+                <strong>Mohammad Zbeeb</strong>
+                <br><i class="fas fa-envelope"></i> <a href="mailto:mbz02@mail.aub.edu">mbz02@mail.aub.edu</a>
+                <br><i class="fas fa-phone-alt"></i> <a href="tel:+96181534672">+961 81/534672</a>
+            </li>
+            <li class="contact-item">
+                <strong>Mohammad Bazzy</strong>
+                <br><i class="fas fa-envelope"></i> <a href="mailto:mab101@mail.aub.edu">mab101@mail.aub.edu</a>
+                <br><i class="fas fa-phone-alt"></i> <a href="tel:+96181797372">+961 81/797372</a>
+            </li>
+            <li class="contact-item">
+                <strong>Tamara Fakih</strong>
+                <br><i class="fas fa-envelope"></i> <a href="mailto:tmf14@mail.aub.edu">tmf14@mail.aub.edu</a>
+                <br><i class="fas fa-phone-alt"></i> <a href="tel:+96171534746">+961 71 534 746</a>
+            </li>
+            <li class="contact-item">
+                <strong>Mariam Salman</strong>
+                <br><i class="fas fa-envelope"></i> <a href="mailto:mcs12@mail.aub.edu">mcs12@mail.aub.edu</a>
+                <br><i class="fas fa-phone-alt"></i> <a href="tel:+96170907025">+961 70 907 025</a>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
+{% endblock %}
